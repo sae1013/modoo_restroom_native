@@ -37,6 +37,7 @@ export default function RootLayout() {
         setHasWebviewLoaded(true);
     }
 
+
     // 위치 감시하는 Listener를 삽입.
     const addWatchLocationListener = async () => {
         if (subscriptionRef.current) return
@@ -45,6 +46,7 @@ export default function RootLayout() {
             timeInterval: 2000,      // 1초마다 업데이트 (밀리초)
             distanceInterval: 3,     // 1미터 이상 이동 시 업데이트
         }, (location) => {
+            console.log('native: location', location)
             sendLocationToWebView(webviewRef.current, location.coords)
         })
     }
@@ -74,7 +76,6 @@ export default function RootLayout() {
             setShowModal(false)
             setHasLocPermission(true)
         }
-
     }
 
     useEffect(() => {
@@ -84,14 +85,16 @@ export default function RootLayout() {
             return
         }
         addWatchLocationListener();
+
     }, [hasLocPermission, hasWebviewLoaded]);
 
-    // 앱 첫 진입시 권한 요청
+    // 앱 첫 진입시 권한 요청 (웹뷰 로드된 후에 요청하기.)
     useEffect(() => {
+        if (!hasWebviewLoaded) return
         (async () => {
             await requestLocPermission()
         })()
-    }, [])
+    }, [hasLocPermission, hasWebviewLoaded])
 
     useEffect(() => {
         (async () => {
@@ -128,7 +131,7 @@ export default function RootLayout() {
     return (
         <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
             <SafeAreaView style={styles.safeArea}>
-                <WebView ref={webviewRef} source={{uri: "http://192.168.219.118:3000/search"}}
+                <WebView ref={webviewRef} source={{uri: "http://192.168.219.102:3000/search"}}
                          onMessage={(e) => {
                              handleMessage(e, webviewRef, hasLocPermission)
                          }}
