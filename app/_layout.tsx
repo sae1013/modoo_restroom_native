@@ -12,11 +12,9 @@ import "react-native-reanimated";
 import {Alert, AppState, Button, Linking, Modal, SafeAreaView, StyleSheet} from "react-native";
 import {useColorScheme} from "@/hooks/useColorScheme";
 import WebView from "react-native-webview";
-import * as Location from 'expo-location'
-import * as Haptics from "expo-haptics";
-import {checkLocationPermission, handleMessage} from '../utils/messages'
-import {sendLocationToWebView, sendLocPermissionToWebView} from "@/utils/bridges";
 import {View, Text} from "react-native";
+import {requestLocPermission} from "@/message/handler/permission";
+
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -30,34 +28,12 @@ export default function RootLayout() {
     const colorScheme = useColorScheme();
 
     const subscriptionRef = useRef<any>(null);
-    const webviewRef = useRef<WebView>(null);
+    const webviewRef = useRef<WebView | null>(null);
     const [hasWebviewLoaded, setHasWebviewLoaded] = useState(false)
 
     const handleLoadedWebView = () => {
         setHasWebviewLoaded(true);
     }
-
-
-    // 위치 감시하는 Listener를 삽입.
-    const addWatchLocationListener = async () => {
-        if (subscriptionRef.current) return
-        subscriptionRef.current = await Location.watchPositionAsync({
-            accuracy: Location.Accuracy.High,
-            timeInterval: 2000,      // 1초마다 업데이트 (밀리초)
-            distanceInterval: 3,     // 1미터 이상 이동 시 업데이트
-        }, (location) => {
-            console.log('native: location', location)
-            sendLocationToWebView(webviewRef.current, location.coords)
-        })
-    }
-
-    const removeWatchLocationListener = () => {
-        if (!subscriptionRef.current) return
-        console.log('subscriptionRef.current', subscriptionRef.current)
-        subscriptionRef.current.remove();
-        subscriptionRef.current = null
-    }
-
 
     const handleConfirm = () => {
         Linking.openSettings().catch(() => {
@@ -65,46 +41,16 @@ export default function RootLayout() {
         });
     }
 
-    const requestLocPermission = async () => {
-        const {status} = await Location.requestForegroundPermissionsAsync();
-        if (status !== "granted") {
-            console.log("위치 권한이 변경되어 허용되지 않음");
-            setShowModal(true)
-            setHasLocPermission(false)
-        } else {
-            console.log("위치 권한이 허용됨");
-            setShowModal(false)
-            setHasLocPermission(true)
-        }
-    }
-
-    useEffect(() => {
-        if (!hasWebviewLoaded) return
-        if (!hasLocPermission) {
-            removeWatchLocationListener()
-            return
-        }
-        addWatchLocationListener();
-
-    }, [hasLocPermission, hasWebviewLoaded]);
-
-    // 앱 첫 진입시 권한 요청 (웹뷰 로드된 후에 요청하기.)
-    useEffect(() => {
-        if (!hasWebviewLoaded) return
-        (async () => {
-            await requestLocPermission()
-        })()
-    }, [hasLocPermission, hasWebviewLoaded])
-
-    useEffect(() => {
-        (async () => {
-            // const permission = await checkLocationPermission()
-            // 퍼미션이 변경될때마다 웹뷰로 전달.
-            sendLocPermissionToWebView(webviewRef.current, hasLocPermission)
-        })()
-
-    }, [hasLocPermission])
-    // 앱 재 진입시 권한 요청
+    // useEffect(() => {
+    //     (async () => {
+    //         // const permission = await checkLocationPermission()
+    //         // 퍼미션이 변경될때마다 웹뷰로 전달.
+    //         sendLocPermissionToWebView(webviewRef.current, hasLocPermission)
+    //     })()
+    //
+    // }, [hasLocPermission])
+    // 앱 재 진입시 권한 요청0.758*
+    // 이 경우는, 앱이 이미 켜진후에 발생하기때문에 바로 리스너를 등록해도된다.
     useEffect(() => {
         const subscription = AppState.addEventListener("change", async (nextAppState) => {
             if (nextAppState === "active") {
