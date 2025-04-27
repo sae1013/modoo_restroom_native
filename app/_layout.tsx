@@ -14,6 +14,7 @@ import {useColorScheme} from "@/hooks/useColorScheme";
 import WebView from "react-native-webview";
 import {View, Text} from "react-native";
 import {requestLocPermission} from "@/message/handler/permission";
+import {messageHandler} from "@/message";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -22,47 +23,22 @@ export default function RootLayout() {
     const [loaded] = useFonts({
         SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
     });
-    const [hasLocPermission, setHasLocPermission] = useState(false);
     const [showModal, setShowModal] = useState(false);
-
     const colorScheme = useColorScheme();
-
-    const subscriptionRef = useRef<any>(null);
     const webviewRef = useRef<WebView | null>(null);
+    const subscriptionRef = useRef<any>({});
+
     const [hasWebviewLoaded, setHasWebviewLoaded] = useState(false)
 
     const handleLoadedWebView = () => {
         setHasWebviewLoaded(true);
     }
 
-    const handleConfirm = () => {
-        Linking.openSettings().catch(() => {
-            Alert.alert('Error', '설정 페이지를 열 수 없습니다.');
-        });
-    }
-
-    // useEffect(() => {
-    //     (async () => {
-    //         // const permission = await checkLocationPermission()
-    //         // 퍼미션이 변경될때마다 웹뷰로 전달.
-    //         sendLocPermissionToWebView(webviewRef.current, hasLocPermission)
-    //     })()
-    //
-    // }, [hasLocPermission])
-    // 앱 재 진입시 권한 요청0.758*
-    // 이 경우는, 앱이 이미 켜진후에 발생하기때문에 바로 리스너를 등록해도된다.
-    useEffect(() => {
-        const subscription = AppState.addEventListener("change", async (nextAppState) => {
-            if (nextAppState === "active") {
-                await requestLocPermission()
-            }
-        });
-        return () => {
-            subscription.remove();
-            // 앱이 종료될때 구독취소
-        };
-    }, []);
-
+    // const handleConfirm = () => {
+    //     Linking.openSettings().catch(() => {
+    //         Alert.alert('Error', '설정 페이지를 열 수 없습니다.');
+    //     });
+    // }
     useEffect(() => {
         if (loaded) {
             SplashScreen.hideAsync();
@@ -77,9 +53,10 @@ export default function RootLayout() {
     return (
         <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
             <SafeAreaView style={styles.safeArea}>
-                <WebView ref={webviewRef} source={{uri: "http://192.168.219.102:3000/search"}}
+                <WebView ref={webviewRef} source={{uri: "http://192.168.219.124:3000/test"}}
+                         webviewDebuggingEnabled={true}
                          onMessage={(e) => {
-                             handleMessage(e, webviewRef, hasLocPermission)
+                             messageHandler(e, webviewRef, subscriptionRef)
                          }}
 
                          onLoad={handleLoadedWebView}
@@ -95,7 +72,7 @@ export default function RootLayout() {
                                 <Text style={styles.modalTitle}>위치권한 허용안내</Text>
                                 <Text style={styles.modalMessage}>위치를 사용하는 서비스입니다. 활성화 시켜주세요</Text>
                                 <Button title="닫기" onPress={() => {
-                                    handleConfirm()
+                                    // handleConfirm()
                                 }}/>
                             </View>
                         </View>

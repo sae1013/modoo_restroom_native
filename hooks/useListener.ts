@@ -12,13 +12,26 @@ import {requestLocPermission} from "@/message/handler/permission";
 export const useListener = () => {
     const subscriptionRef = useRef<any | null>(null);
 
-    const addWatchLocationListener = async (callback) => {
+    // 위치추적 리스너를 달 때.
+    const addWatchLocationListener = async (webviewRef, param) => {
+        const callback = param?.callback
+
         subscriptionRef.current = await Location.watchPositionAsync({
             accuracy: Location.Accuracy.High,
             timeInterval: 2000,      // 1초마다 업데이트 (밀리초)
             distanceInterval: 3,     // 1미터 이상 이동 시 업데이트
         }, (location) => {
-            callback(location.coords)
+            const script = `
+            if (window['${callback}']) {
+              window['${callback}'](${location.coords});
+            } else {
+              console.warn('${callback} is not defined on window.');
+            }
+            true;
+          `;
+            if (webviewRef && webviewRef.current) {
+                webviewRef.current.injectJavaScript(script);
+            }
         })
     }
 
@@ -30,13 +43,13 @@ export const useListener = () => {
     }
 
     // 앱 백그라운드 -> 포그라운드 체인지 될 때 올라오는 값. (웹뷰의 root에서)
-    const addWatchLocationActiveForeground = () => {
-        const subscription = AppState.addEventListener("change", async (nextAppState) => {
-            if (nextAppState === "active") {
-                await requestLocPermission()
-            }
-        });
-    }
+    // const addWatchLocationActiveForeground = () => {
+    //     const subscription = AppState.addEventListener("change", async (nextAppState) => {
+    //         if (nextAppState === "active") {
+    //             await requestLocPermission()
+    //         }
+    //     });
+    // }
     return {
         addWatchLocationListener,
         removeWatchLocationListener
