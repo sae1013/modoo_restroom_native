@@ -54,7 +54,7 @@ export const watchForeGroundLocationPermission = (webviewRef, param, subscriptio
         }
     });
     subscriptionRef.current.watchChangeLocationPermission = subscription;
-    console.log('foreground sub객체',subscriptionRef.current.watchChangeLocationPermission)
+    console.log('foreground sub객체', subscriptionRef.current.watchChangeLocationPermission)
 }
 
 // TODO: 종료될 때 foreground permit 취소하기. (앱의 루트 에서)

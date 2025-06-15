@@ -7,7 +7,8 @@ type GetCurrentLocationReturnType = {
 
 export const getCurrentLocation = async (webviewRef, param) => {
     let location;
-    const callback = param;
+    const {callback} = param;
+
     try {
         // 캐시 위치 반환
         location = await getLastCacheLocation();
@@ -58,13 +59,12 @@ export const addWatchLocationListener = async (webviewRef, param, subscriptionRe
     subscriptionRef.current.watchLocation = await Location.watchPositionAsync({
         accuracy: Location.Accuracy.High,
         timeInterval: 2000,      // 1초마다 업데이트 (밀리초)
-        distanceInterval: 0,
-        // distanceInterval: 3,     // 1미터 이상 이동 시 업데이트
+        distanceInterval: 3,     // 1미터 이상 이동 시 업데이트
     }, (location) => {
         console.log('location', location)
         const script = `
             if (window['${callback}']) {
-              window['${callback}'](${JSON.stringify(location.coords)});
+              window['${callback}'](${location?.coords?.latitude}, ${location?.coords?.longitude});
             } else {
               console.warn('${callback} is not defined on window.');
             }
