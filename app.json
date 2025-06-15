@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/haewuso_logo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.minwoojung.haewuso"
     },
     "web": {
       "bundler": "metro",
@@ -32,7 +33,7 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/splash1.png",
-          "resizeMode": "contain",
+          "resizeMode": "cover",
           "backgroundColor": "#ffffff"
         }
       ],
