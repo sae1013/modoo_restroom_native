@@ -31,10 +31,10 @@ export default function RootLayout() {
     }
 
     useEffect(() => {
-        if (loaded) {
+        if (loaded && hasWebviewLoaded) {
             SplashScreen.hideAsync();
         }
-    }, [loaded]);
+    }, [loaded, hasWebviewLoaded]);
 
     if (!loaded) {
         return null;

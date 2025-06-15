@@ -1,19 +1,23 @@
 {
   "expo": {
-    "name": "modoo_toilet",
-    "slug": "modoo_toilet",
+    "name": "해우소",
+    "slug": "haewuso",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/haewuso_logo.jpeg",
+    "icon": "./assets/images/haewuso_logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.minwoojung.haewuso",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/haewuso_logo.png",
         "backgroundColor": "#ffffff"
       }
     },
@@ -27,8 +31,7 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
-          "imageWidth": 200,
+          "image": "./assets/images/splash1.png",
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
         }
@@ -36,6 +39,12 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "977728ba-cb7e-413b-8ebd-a127bda9578b"
+      }
     }
   }
 }
