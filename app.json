@@ -5,6 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/haewuso_logo.png",
+    "splash": "./assets/images/splash1.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -12,7 +13,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.minwoojung.haewuso",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocationWhenInUseUsageDescription": "앱 사용 중 위치 권한을 요청합니다.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "백그라운드 위치 접근이 필요합니다."
       }
     },
     "android": {
@@ -36,8 +39,7 @@
           "resizeMode": "cover",
           "backgroundColor": "#ffffff"
         }
-      ],
-      "sentry-expo"
+      ]
     ],
     "experiments": {
       "typedRoutes": true
