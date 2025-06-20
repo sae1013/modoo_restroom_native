@@ -55,10 +55,8 @@ export default function RootLayout() {
 
     return (
         <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-            {/*<SafeAreaView style={styles.safeArea} edges={['right', 'bottom', 'left']}>*/}
-            <StatusBar style="dark" translucent={false}/>
-            {/*<WebView ref={webviewRef} source={{uri: "h₩ttps://haewuso.shop/auth/login"}}*/}
-            <WebView ref={webviewRef} source={{uri: "http://192.168.219.128:3000/auth/login"}}
+            <StatusBar barStyle="dark-content" translucent={false}/>
+            <WebView ref={webviewRef} source={{uri: "https://haewuso.shop/auth/login"}}
                      injectedJavaScriptBeforeContentLoaded={injectedInitScript}
                      javaScriptEnabled
                      webviewDebuggingEnabled={true}
