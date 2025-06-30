@@ -44,17 +44,26 @@ export const requestLocPermission = async (webviewRef, param) => {
  * 권한이 바뀔 때마다 location T/F 를 Check를 하고 웹뷰로 전송
  */
 export const watchForeGroundLocationPermission = (webviewRef, param, subscriptionRef) => {
-    console.log('watchforeGroundLocationPermission', param);
-    // 기존 구독 있을 시 무시.
-    if (subscriptionRef.current.watchChangeLocationPermission) return
+    const handler = async (nextAppState) => {
+        if (nextAppState === 'active') {
+            // 이벤트 리스너 해제 (순간 단절)
+            subscriptionRef.current.watchChangeLocationPermission.remove();
+            subscriptionRef.current.watchChangeLocationPermission = null;
 
-    const subscription = AppState.addEventListener("change", async (nextAppState) => {
-        if (nextAppState === "active") {
-            await requestLocPermission(webviewRef, param)
+            // 권한 요청
+            await requestLocPermission(webviewRef, param);
+
+            // 권한 요청 후 리스너 재등록
+            const newSub = AppState.addEventListener('change', handler);
+            subscriptionRef.current.watchChangeLocationPermission = newSub;
         }
-    });
-    subscriptionRef.current.watchChangeLocationPermission = subscription;
-    console.log('foreground sub객체', subscriptionRef.current.watchChangeLocationPermission)
+    }
+
+    if (subscriptionRef.current.watchChangeLocationPermission) return;
+
+    // 최초 구독
+    const sub = AppState.addEventListener('change', handler);
+    subscriptionRef.current.watchChangeLocationPermission = sub;
 }
 
 // TODO: 종료될 때 foreground permit 취소하기. (앱의 루트 에서)
