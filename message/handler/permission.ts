@@ -43,7 +43,7 @@ export const requestLocPermission = async (webviewRef, param) => {
  * @param param
  * 권한이 바뀔 때마다 location T/F 를 Check를 하고 웹뷰로 전송
  */
-export const watchForeGroundLocationPermission = (webviewRef, param, subscriptionRef) => {
+export const watchForeGroundLocationPermission2 = (webviewRef, param, subscriptionRef) => {
     console.log('watchforeGroundLocationPermission', param);
     // 기존 구독 있을 시 무시.
     if (subscriptionRef.current.watchChangeLocationPermission) return
@@ -57,7 +57,7 @@ export const watchForeGroundLocationPermission = (webviewRef, param, subscriptio
     console.log('foreground sub객체', subscriptionRef.current.watchChangeLocationPermission)
 }
 
-export const watchForeGroundLocationPermissionForAndroid = (webviewRef, param, subscriptionRef) => {
+export const watchForeGroundLocationPermission = (webviewRef, param, subscriptionRef) => {
     const handler = async (nextAppState) => {
         const callback = param?.callback
 
