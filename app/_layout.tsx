@@ -15,7 +15,8 @@ import WebView from "react-native-webview";
 import {messageHandler} from "@/message";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
+const DEFAULT_AOS_BOTTOM_INSETS = 16
 
 export default function RootLayout() {
     const [loaded] = useFonts({
@@ -24,7 +25,11 @@ export default function RootLayout() {
     const colorScheme = useColorScheme();
     const insets = useSafeAreaInsets()
     const topInset = Platform.OS === "ios" ? insets.top : StatusBar.currentHeight || 0;
-    const bottomInset = insets.bottom
+    let bottomInset = insets.bottom
+    if(Platform.OS ==='android') {
+        bottomInset = DEFAULT_AOS_BOTTOM_INSETS;
+    }
+
     const webviewRef = useRef<WebView | null>(null);
     const subscriptionRef = useRef<any>({});
     console.log(topInset, bottomInset)
