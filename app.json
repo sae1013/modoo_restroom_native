@@ -7,7 +7,7 @@
     "icon": "./assets/images/haewuso_logo.png",
     "splash": {
       "image": "./assets/images/splash1.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#fff",
       "enableFullScreenImage_legacy": true
     },
@@ -17,6 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.minwoojung.haewuso",
+      "icon": "./assets/images/haewuso_logo.png",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSLocationWhenInUseUsageDescription": "앱 사용 중 위치 권한을 요청합니다.",
@@ -27,8 +28,9 @@
       }
     },
     "android": {
+      "icon": "./assets/images/haewuso_logo_aos.png",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/haewuso_logo.png",
+        "foregroundImage": "./assets/images/haewuso_logo_aos.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.minwoojung.haewuso"
@@ -46,6 +48,25 @@
       "eas": {
         "projectId": "977728ba-cb7e-413b-8ebd-a127bda9578b"
       }
-    }
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "android": {
+            "backgroundColor": "#ffffff",
+            "image": "./assets/images/splash1.png",
+            "resizeMode": "cover",
+            "imageWidth": 200
+          },
+          "ios": {
+            "backgroundColor": "#ffffff",
+            "image": "./assets/images/splash1.png",
+            "resizeMode": "cover",
+            "imageWidth": 200
+          }
+        }
+      ]
+    ]
   }
 }
