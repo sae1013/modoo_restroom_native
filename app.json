@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "해우소",
-    "slug": "haewuso",
+    "slug": "haewusoapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/haewuso_logo.png",
@@ -16,7 +16,8 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.minwoojung.haewuso",
+      "bundleIdentifier": "com.wooyalab.haewuso",
+      "buildNumber": "4",
       "icon": "./assets/images/haewuso_logo.png",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
@@ -33,7 +34,7 @@
         "foregroundImage": "./assets/images/haewuso_logo_aos.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.minwoojung.haewuso"
+      "package": "com.wooyalab.haewuso"
     },
     "web": {
       "bundler": "metro",
@@ -46,7 +47,7 @@
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "977728ba-cb7e-413b-8ebd-a127bda9578b"
+        "projectId": "34b9e804-135e-43af-85e4-cf203befd720"
       }
     },
     "plugins": [
@@ -54,12 +55,6 @@
         "expo-splash-screen",
         {
           "android": {
-            "backgroundColor": "#ffffff",
-            "image": "./assets/images/splash1.png",
-            "resizeMode": "cover",
-            "imageWidth": 200
-          },
-          "ios": {
             "backgroundColor": "#ffffff",
             "image": "./assets/images/splash1.png",
             "resizeMode": "cover",
