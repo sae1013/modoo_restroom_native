@@ -20,6 +20,9 @@
     "production": {
       "distribution": "store",
       "autoIncrement": true,
+      "env": {
+        "ANDROID_SDK_ROOT": "/Users/minwoo/Library/Android/sdk"
+      },
       "android": {
         "buildType": "app-bundle"
       },
@@ -29,6 +32,11 @@
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "ios": {
+        "appleId": "wooyalab@gmail.com",
+        "ascAppId": "6747615065"
+      }
+    }
   }
 }
