@@ -21,7 +21,7 @@
       "distribution": "store",
       "autoIncrement": true,
       "env": {
-        "ANDROID_SDK_ROOT": "/Users/minwoo/Library/Android/sdk"
+        "ANDROID_SDK_ROOT": "/Users/minwoojung/Library/Android/sdk"
       },
       "android": {
         "buildType": "app-bundle"

@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wooyalab.haewuso",
-      "buildNumber": "4",
+      "buildNumber": "5",
       "icon": "./assets/images/haewuso_logo.png",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
@@ -30,6 +30,7 @@
     },
     "android": {
       "icon": "./assets/images/haewuso_logo_aos.png",
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/haewuso_logo_aos.png",
         "backgroundColor": "#ffffff"
@@ -55,10 +56,9 @@
         "expo-splash-screen",
         {
           "android": {
-            "backgroundColor": "#ffffff",
-            "image": "./assets/images/splash1.png",
-            "resizeMode": "cover",
-            "imageWidth": 200
+            "backgroundColor": "#36BFB1",
+            "image": "./assets/images/aos_splash_logo_2x.png",
+            "resizeMode": "cover"
           }
         }
       ]

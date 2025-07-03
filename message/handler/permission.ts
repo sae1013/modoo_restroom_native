@@ -43,6 +43,7 @@ export const requestLocPermission = async (webviewRef, param) => {
  * @param param
  * 권한이 바뀔 때마다 location T/F 를 Check를 하고 웹뷰로 전송
  */
+// 아래 로직은, AOS에서 무한 요청으로 삭제.
 export const watchForeGroundLocationPermission2 = (webviewRef, param, subscriptionRef) => {
     console.log('watchforeGroundLocationPermission', param);
     // 기존 구독 있을 시 무시.
