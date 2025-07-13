@@ -58,7 +58,8 @@
           "android": {
             "backgroundColor": "#36BFB1",
             "image": "./assets/images/aos_splash_logo_2x.png",
-            "resizeMode": "cover"
+            "resizeMode": "contain",
+            "imageWidth": 200
           }
         }
       ]
