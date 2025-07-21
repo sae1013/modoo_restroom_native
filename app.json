@@ -31,6 +31,15 @@
     "android": {
       "icon": "./assets/images/haewuso_logo_aos.png",
       "versionCode": 6,
+      "splash": {
+        "mdpi": "./assets/images/splash1.png",
+        "hdpi": "./assets/images/splash1.png",
+        "xhdpi": "./assets/images/splash1.png",
+        "xxhdpi": "./assets/images/splash1.png",
+        "xxxhdpi": "./assets/images/splash1.png",
+        "resizeMode": "cover",
+        "backgroundColor": "#ffffff"
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/haewuso_logo_aos.png",
         "backgroundColor": "#ffffff"
