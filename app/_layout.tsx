@@ -1,7 +1,7 @@
 import {
-    DarkTheme,
-    DefaultTheme,
-    ThemeProvider,
+	DarkTheme,
+	DefaultTheme,
+	ThemeProvider,
 } from "@react-navigation/native";
 import {useFonts} from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
@@ -14,26 +14,25 @@ import {useColorScheme} from "@/hooks/useColorScheme";
 import WebView from "react-native-webview";
 import {messageHandler} from "@/message";
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-// SplashScreen.preventAutoHideAsync();
 const DEFAULT_AOS_BOTTOM_INSETS = 16
 
+SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
-    const [loaded] = useFonts({
-        SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
-    });
-    const colorScheme = useColorScheme();
-    const insets = useSafeAreaInsets()
-    const topInset = Platform.OS === "ios" ? insets.top : StatusBar.currentHeight || 0;
-    let bottomInset = insets.bottom
-    if(Platform.OS ==='android') {
-        bottomInset = DEFAULT_AOS_BOTTOM_INSETS;
-    }
+	const [loaded] = useFonts({
+		SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+	});
+	const colorScheme = useColorScheme();
+	const insets = useSafeAreaInsets()
+	const topInset = Platform.OS === "ios" ? insets.top : StatusBar.currentHeight || 0;
+	let bottomInset = insets.bottom
+	if (Platform.OS === 'android') {
+		bottomInset = DEFAULT_AOS_BOTTOM_INSETS;
+	}
 
-    const webviewRef = useRef<WebView | null>(null);
-    const subscriptionRef = useRef<any>({});
-    console.log(topInset, bottomInset)
-    const injectedInitScript = `
+	const webviewRef = useRef<WebView | null>(null);
+	const subscriptionRef = useRef<any>({});
+	console.log(topInset, bottomInset)
+	const injectedInitScript = `
     (function() {
       window.SAFE_AREA_INSETS_TOP = ${topInset || 0};
       window.SAFE_AREA_INSETS_BOTTOM = ${bottomInset || 0};
@@ -41,48 +40,49 @@ export default function RootLayout() {
     true;
   `
 
-    const [hasWebviewLoaded, setHasWebviewLoaded] = useState(false)
+	const [hasWebviewLoaded, setHasWebviewLoaded] = useState(false)
 
-    const handleLoadedWebView = () => {
-        setHasWebviewLoaded(true);
-    }
+	const handleLoadedWebView = () => {
+		setHasWebviewLoaded(true);
+	}
 
-    useEffect(() => {
-        if (loaded && hasWebviewLoaded) {
-            SplashScreen.hideAsync();
-        }
-    }, [loaded, hasWebviewLoaded]);
+	useEffect(() => {
+		if (loaded && hasWebviewLoaded) {
+			SplashScreen.hideAsync();
+		}
+	}, [loaded, hasWebviewLoaded]);
 
-    if (!loaded) {
-        return null;
-    }
+	if (!loaded) {
+		return null;
+	}
 
 
-    return (
-        <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-            <StatusBar barStyle="dark-content" translucent={false}/>
-            <WebView ref={webviewRef} source={{uri: "https://haewuso.shop/auth/login"}}
-                     injectedJavaScriptBeforeContentLoaded={injectedInitScript}
-                     javaScriptEnabled
-                     webviewDebuggingEnabled={true}
-                     onMessage={(e) => {
-                         if (!hasWebviewLoaded) return
-                         messageHandler(e, webviewRef, subscriptionRef)
-                     }}
-                     onLoad={handleLoadedWebView}
-            />
-            {/*</SafeAreaView>*/}
-        </ThemeProvider>
-    );
+	return (
+		<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+			<StatusBar barStyle="dark-content" translucent={false}/>
+			<WebView ref={webviewRef}
+							 source={{uri: __DEV__ ? 'http://localhost:3000/auth/login' : "https://haewuso.shop/auth/login"}}
+							 injectedJavaScriptBeforeContentLoaded={injectedInitScript}
+							 javaScriptEnabled
+							 webviewDebuggingEnabled={true}
+							 onMessage={(e) => {
+								 if (!hasWebviewLoaded) return
+								 messageHandler(e, webviewRef, subscriptionRef)
+							 }}
+							 onLoad={handleLoadedWebView}
+			/>
+			{/*</SafeAreaView>*/}
+		</ThemeProvider>
+	);
 }
 
 const styles = StyleSheet.create({
-    safeArea: {
-        flex: 1,
-        backgroundColor: '#fff', // 필요에 따라 배경색 지정
-    },
-    webview: {
-        flex: 1,
-    },
+	safeArea: {
+		flex: 1,
+		backgroundColor: '#fff', // 필요에 따라 배경색 지정
+	},
+	webview: {
+		flex: 1,
+	},
 
 });

@@ -1,50 +1,50 @@
-# Welcome to your Expo app 👋
-
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
-
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+### < 공통 가이드 > 
+### 개발테스트
+- 빌드 
+```
+expo prebuild --platform ios --clean
+expo prebuild --platform android --clean
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- 실행
+```
+expo run:ios --device
+expo run:android --device
+```
 
-## Learn more
+### < AOS >
 
-To learn more about developing your project with Expo, look at the following resources:
+### 안드로이드 배포용 로컬빌드
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+1-1 로컬에서 eas build (prd모드)
+``` 
+eas build --platform android --local --profile production
+```
 
-## Join the community
+### 빌드전 유의사항
+1-2 local.properties 파일에서 아래 안드로이드 sdk 폴더지정(빌드 툴이 들어있음)
+```
+sdk.dir=/Users/minwoojung/Library/Android/sdk
+```
+### aab 파일 play console에 업로드
 
-Join our community of developers creating universal apps.
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### < IOS >
+2-1 로컬에서 eas build (prd모드)
+```
+eas build --platform ios --local --profile production
+```
+
+### IOS 빌드 후 아티팩트 올리는법 (엑스포 -> 테스트플라이트로 자동 submit됨)
+2-2 생성된 빌드파일을 테스트플라이트 or 앱스토어에 올리는법
+``` 
+eas submit \
+  --platform ios \
+  --profile production \
+  --path ./build/MyApp.ipa
+
+```
+
+
+### 트러블슈팅
+- IOS 빌드를 위해서 cocoapods 설치 필수. 

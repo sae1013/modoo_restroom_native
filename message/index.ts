@@ -15,7 +15,7 @@ export const messageHandler = (event, webviewRef, subscriptionRef) => {
     const command = message?.command;
     const param = message?.param || {};
 
-    console.log('메시지, 파라미터', command, param)
+    // console.log('메시지, 파라미터', command, param)
     switch (command) {
         case 'TRIGGER_HAPTIC':
             triggerHaptic()

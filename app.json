@@ -17,7 +17,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.wooyalab.haewuso",
-      "buildNumber": "5",
+      "buildNumber": "6",
       "icon": "./assets/images/haewuso_logo.png",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
@@ -30,15 +30,11 @@
     },
     "android": {
       "icon": "./assets/images/haewuso_logo_aos.png",
-      "versionCode": 6,
+      "versionCode": 10,
       "splash": {
-        "mdpi": "./assets/images/splash1.png",
-        "hdpi": "./assets/images/splash1.png",
-        "xhdpi": "./assets/images/splash1.png",
-        "xxhdpi": "./assets/images/splash1.png",
-        "xxxhdpi": "./assets/images/splash1.png",
-        "resizeMode": "cover",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#36BFB1",
+        "image": "./assets/images/aos_splash_logo_2x.png",
+        "resizeMode": "contain"
       },
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/haewuso_logo_aos.png",
@@ -59,19 +55,6 @@
       "eas": {
         "projectId": "34b9e804-135e-43af-85e4-cf203befd720"
       }
-    },
-    "plugins": [
-      [
-        "expo-splash-screen",
-        {
-          "android": {
-            "backgroundColor": "#36BFB1",
-            "image": "./assets/images/aos_splash_logo_2x.png",
-            "resizeMode": "contain",
-            "imageWidth": 200
-          }
-        }
-      ]
-    ]
+    }
   }
 }
